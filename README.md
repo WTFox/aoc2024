@@ -12,20 +12,23 @@ This repository contains my solutions for [Advent of Code 2024](https://adventof
 ### Running Solutions
 
 To run a specific day's solution:
+
 ```bash
-cargo run -- --day 01
+cargo run -- --day 1
 ```
 
 To run tests:
+
 ```bash
 cargo test
 ```
 
 ## 📝 Progress
 
-| Day | Part 1 | Part 2 | Notes |
-|-----|---------|---------|-------|
-| [Day 1](src/days/day01.rs) | ⭐ | ⭐ | |
+| Day                        | Part 1 | Part 2 | Notes |
+| -------------------------- | ------ | ------ | ----- |
+| [Day 1](src/days/day01.rs) | ⭐     | ⭐     |       |
+| [Day 2](src/days/day02.rs) | ⭐     | ⭐     |       |
 
 ## 🛠 Implementation Details
 
