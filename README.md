@@ -29,7 +29,8 @@ cargo test
 | -------------------------- | ------ | ------ | ----- |
 | [Day 1](src/days/day01.rs) | ⭐     | ⭐     |       |
 | [Day 2](src/days/day02.rs) | ⭐     | ⭐     |       |
-| [Day 3](src/days/day03.rs) |        |        |       |
+| [Day 3](src/days/day03.rs) | ⭐     | ⭐     |       |
+| [Day 4](src/days/day03.rs) |        |        |       |
 
 ## 🛠 Implementation Details
 
