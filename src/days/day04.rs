@@ -9,9 +9,12 @@ fn process_input(input: &str) -> Vec<Vec<char>> {
         .collect()
 }
 
-fn find_word(grid: &[Vec<char>], point: &mut Point, direction: Direction, length: i32) -> String {
+fn find_word(grid: &[Vec<char>], x: i32, y: i32, direction: Direction, length: i32) -> String {
+    let mut point = Point {
+        x: x as i32,
+        y: y as i32,
+    };
     let mut output = String::from(point.value_at(grid));
-    let mut point = *point;
     (0..length - 1).for_each(|_i| {
         if let Some(new_point) = point.attempt_move(direction, grid) {
             point = new_point;
@@ -22,26 +25,26 @@ fn find_word(grid: &[Vec<char>], point: &mut Point, direction: Direction, length
 }
 
 pub fn part_one(input: &str) -> i32 {
-    let mut count = 0;
     let looking_for = "XMAS";
-    let length = 4;
     let grid = process_input(input);
 
+    let mut count = 0;
     for y in 0..grid.len() {
         for x in 0..grid[y].len() {
-            let mut point = Point {
-                x: x as i32,
-                y: y as i32,
-            };
             for direction in Direction::iterator() {
-                let word = find_word(&grid, &mut point, *direction, length);
+                let word = find_word(
+                    &grid,
+                    x as i32,
+                    y as i32,
+                    *direction,
+                    looking_for.len() as i32,
+                );
                 if word == looking_for {
                     count += 1;
                 }
             }
         }
     }
-
     count
 }
 
@@ -59,12 +62,16 @@ pub fn part_two(input: &str) -> i32 {
                 continue;
             }
 
-            let top_left = point.value_in_direction(Direction::UpLeft, &grid);
-            let top_right = point.value_in_direction(Direction::UpRight, &grid);
-            let bottom_left = point.value_in_direction(Direction::DownLeft, &grid);
-            let bottom_right = point.value_in_direction(Direction::DownRight, &grid);
-
-            let pairs = [(top_left, bottom_right), (top_right, bottom_left)];
+            let pairs = [
+                (
+                    point.value_in_direction(Direction::UpLeft, &grid),
+                    point.value_in_direction(Direction::DownRight, &grid),
+                ),
+                (
+                    point.value_in_direction(Direction::UpRight, &grid),
+                    point.value_in_direction(Direction::DownLeft, &grid),
+                ),
+            ];
 
             let mut words = pairs.iter().map(|(left, right)| {
                 if Some('M') == *left {
@@ -121,8 +128,8 @@ MXMXAXMASX";
         ];
         let grid = process_input(INPUT);
         for (point, direction) in test_cases.iter() {
-            let mut point = *point;
-            assert_eq!(find_word(&grid, &mut point, *direction, 4), "XMAS");
+            let point = *point;
+            assert_eq!(find_word(&grid, point.x, point.y, *direction, 4), "XMAS");
         }
     }
 
