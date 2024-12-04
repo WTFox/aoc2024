@@ -9,7 +9,13 @@ fn process_input(input: &str) -> Vec<Vec<char>> {
         .collect()
 }
 
-fn find_word(grid: &[Vec<char>], x: i32, y: i32, direction: Direction, length: i32) -> String {
+fn gather_word_in_direction(
+    grid: &[Vec<char>],
+    x: i32,
+    y: i32,
+    direction: Direction,
+    length: i32,
+) -> String {
     let mut point = Point { x, y };
     let mut output = String::from("");
     for _ in 0..length {
@@ -30,7 +36,7 @@ pub fn part_one(input: &str) -> i32 {
         for x in 0..grid[y].len() {
             count += Direction::iterator()
                 .map(|direction| {
-                    find_word(
+                    gather_word_in_direction(
                         &grid,
                         x as i32,
                         y as i32,
@@ -125,7 +131,10 @@ MXMXAXMASX";
         ];
         let grid = process_input(INPUT);
         for ((x, y), direction) in test_cases.iter() {
-            assert_eq!(find_word(&grid, *x, *y, *direction, 4), "XMAS");
+            assert_eq!(
+                gather_word_in_direction(&grid, *x, *y, *direction, 4),
+                "XMAS"
+            );
         }
     }
 }
