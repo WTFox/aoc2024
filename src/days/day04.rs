@@ -10,17 +10,14 @@ fn process_input(input: &str) -> Vec<Vec<char>> {
 }
 
 fn find_word(grid: &[Vec<char>], x: i32, y: i32, direction: Direction, length: i32) -> String {
-    let mut point = Point {
-        x: x as i32,
-        y: y as i32,
-    };
-    let mut output = String::from(point.value_at(grid));
-    (0..length - 1).for_each(|_i| {
+    let mut point = Point { x, y };
+    let mut output = String::from("");
+    for _ in 0..length {
+        output.push(point.value_at(grid));
         if let Some(new_point) = point.attempt_move(direction, grid) {
             point = new_point;
-            output.push(point.value_at(grid));
         }
-    });
+    }
     output
 }
 
@@ -31,21 +28,21 @@ pub fn part_one(input: &str) -> i32 {
     let mut count = 0;
     for y in 0..grid.len() {
         for x in 0..grid[y].len() {
-            for direction in Direction::iterator() {
-                let word = find_word(
-                    &grid,
-                    x as i32,
-                    y as i32,
-                    *direction,
-                    looking_for.len() as i32,
-                );
-                if word == looking_for {
-                    count += 1;
-                }
-            }
+            count += Direction::iterator()
+                .map(|direction| {
+                    find_word(
+                        &grid,
+                        x as i32,
+                        y as i32,
+                        *direction,
+                        looking_for.len() as i32,
+                    )
+                })
+                .filter(|word| word == looking_for)
+                .count()
         }
     }
-    count
+    count as i32
 }
 
 pub fn part_two(input: &str) -> i32 {
@@ -62,7 +59,7 @@ pub fn part_two(input: &str) -> i32 {
                 continue;
             }
 
-            let pairs = [
+            let crosswords = [
                 (
                     point.value_in_direction(Direction::UpLeft, &grid),
                     point.value_in_direction(Direction::DownRight, &grid),
@@ -71,21 +68,15 @@ pub fn part_two(input: &str) -> i32 {
                     point.value_in_direction(Direction::UpRight, &grid),
                     point.value_in_direction(Direction::DownLeft, &grid),
                 ),
-            ];
-
-            let mut words = pairs.iter().map(|(left, right)| {
-                if Some('M') == *left {
+            ]
+            .map(|(left, right)| {
+                if Some('M') == left {
                     format!("{}A{}", left.unwrap_or(' '), right.unwrap_or(' '))
-                } else if Some('M') == *right {
-                    format!("{}A{}", right.unwrap_or(' '), left.unwrap_or(' '))
                 } else {
-                    String::new()
+                    format!("{}A{}", right.unwrap_or(' '), left.unwrap_or(' '))
                 }
             });
-
-            if words.all(|word| word == "MAS") {
-                count += 1;
-            }
+            count += crosswords.iter().all(|word| word == "MAS") as i32;
         }
     }
 
@@ -115,27 +106,26 @@ MXMXAXMASX";
     }
 
     #[test]
-    fn test_find_word() {
-        let test_cases = [
-            (Point { x: 5, y: 0 }, Direction::Right),
-            (Point { x: 9, y: 3 }, Direction::Down),
-            (Point { x: 6, y: 4 }, Direction::Left),
-            (Point { x: 9, y: 9 }, Direction::Up),
-            (Point { x: 0, y: 5 }, Direction::UpRight),
-            (Point { x: 6, y: 5 }, Direction::UpLeft),
-            (Point { x: 9, y: 3 }, Direction::DownLeft),
-            (Point { x: 4, y: 0 }, Direction::DownRight),
-        ];
-        let grid = process_input(INPUT);
-        for (point, direction) in test_cases.iter() {
-            let point = *point;
-            assert_eq!(find_word(&grid, point.x, point.y, *direction, 4), "XMAS");
-        }
-    }
-
-    #[test]
     fn test_part_two() {
         let result = part_two(INPUT);
         assert_eq!(result, 9);
+    }
+
+    #[test]
+    fn test_find_word() {
+        let test_cases = [
+            ((5, 0), Direction::Right),
+            ((9, 3), Direction::Down),
+            ((6, 4), Direction::Left),
+            ((9, 9), Direction::Up),
+            ((0, 5), Direction::UpRight),
+            ((6, 5), Direction::UpLeft),
+            ((9, 3), Direction::DownLeft),
+            ((4, 0), Direction::DownRight),
+        ];
+        let grid = process_input(INPUT);
+        for ((x, y), direction) in test_cases.iter() {
+            assert_eq!(find_word(&grid, *x, *y, *direction, 4), "XMAS");
+        }
     }
 }
