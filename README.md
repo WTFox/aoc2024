@@ -25,13 +25,14 @@ cargo test
 
 ## 📝 Progress
 
-| Day                        | Part 1 | Part 2 | Notes |
-| -------------------------- | ------ | ------ | ----- |
-| [Day 1](src/days/day01.rs) | ⭐     | ⭐     |       |
-| [Day 2](src/days/day02.rs) | ⭐     | ⭐     |       |
-| [Day 3](src/days/day03.rs) | ⭐     | ⭐     |       |
-| [Day 4](src/days/day04.rs) | ⭐     | ⭐     |       |
-| [Day 5](src/days/day05.rs) |        |        |       |
+| Day                        | Part 1 | Part 2 |
+| -------------------------- | ------ | ------ |
+| [Day 1](src/days/day01.rs) | ⭐     | ⭐     |
+| [Day 2](src/days/day02.rs) | ⭐     | ⭐     |
+| [Day 3](src/days/day03.rs) | ⭐     | ⭐     |
+| [Day 4](src/days/day04.rs) | ⭐     | ⭐     |
+| [Day 5](src/days/day05.rs) | ⭐     | ⭐     |
+| [Day 6](src/days/day06.rs) |        |        |
 
 ## 🛠 Implementation Details
 
