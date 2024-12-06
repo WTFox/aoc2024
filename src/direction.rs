@@ -19,6 +19,10 @@ impl TryFrom<char> for Direction {
             'D' => Ok(Direction::Down),
             'L' => Ok(Direction::Left),
             'R' => Ok(Direction::Right),
+            '^' => Ok(Direction::Up),
+            'v' => Ok(Direction::Down),
+            '<' => Ok(Direction::Left),
+            '>' => Ok(Direction::Right),
             _ => Err(()),
         }
     }

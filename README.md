@@ -32,7 +32,8 @@ cargo test
 | [Day 3](src/days/day03.rs) | ⭐     | ⭐     |
 | [Day 4](src/days/day04.rs) | ⭐     | ⭐     |
 | [Day 5](src/days/day05.rs) | ⭐     | ⭐     |
-| [Day 6](src/days/day06.rs) |        |        |
+| [Day 6](src/days/day06.rs) | ⭐     |        |
+| [Day 7](src/days/day07.rs) |        |        |
 
 ## 🛠 Implementation Details
 
